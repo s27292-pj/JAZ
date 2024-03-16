@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: Zjazd1
+my:
+  custom:
+    property: 'Hello from application properties'
