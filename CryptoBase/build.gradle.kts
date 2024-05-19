@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
+    id("org.openapi.generator") version "7.5.0"
 }
 
 group = "com.example"
@@ -31,9 +32,9 @@ dependencies {
     implementation ("io.springfox:springfox-boot-starter:3.0.0")
     implementation ("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
-    implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+
 }

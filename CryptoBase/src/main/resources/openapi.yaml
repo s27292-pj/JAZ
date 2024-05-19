@@ -1,0 +1,167 @@
+openapi: 3.0.3
+info:
+  title: CryptoBase Token API
+  description: API for managing crypto tokens
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /addToken:
+    post:
+      summary: Add a new token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenCreateRequest'
+      responses:
+        '200':
+          description: Token created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /getTokens:
+    get:
+      summary: Get all tokens
+      responses:
+        '200':
+          description: List of tokens
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TokenResponse'
+        '500':
+          description: Internal server error
+
+  /getToken/{symbol}:
+    get:
+      summary: Get token by symbol
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Token found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Bad request
+        '404':
+          description: Token not found
+        '500':
+          description: Internal server error
+
+  /deleteToken/{symbol}:
+    delete:
+      summary: Delete token by symbol
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Token deleted successfully
+        '400':
+          description: Bad request
+        '404':
+          description: Token not found
+        '500':
+          description: Internal server error
+
+  /updateToken/{symbol}:
+    put:
+      summary: Update token by symbol
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenUpdateRequest'
+      responses:
+        '200':
+          description: Token updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Bad request
+        '404':
+          description: Token not found
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    TokenCreateRequest:
+      type: object
+      properties:
+        symbol:
+          type: string
+        token_name:
+          type: string
+        total_supply:
+          type: integer
+          format: int64
+        network:
+          type: string
+      required:
+        - symbol
+        - token_name
+        - total_supply
+        - network
+
+    TokenUpdateRequest:
+      type: object
+      properties:
+        symbol:
+          type: string
+        token_name:
+          type: string
+        total_supply:
+          type: integer
+          format: int64
+        network:
+          type: string
+      required:
+        - symbol
+        - token_name
+        - total_supply
+        - network
+
+    TokenResponse:
+      type: object
+      properties:
+        symbol:
+          type: string
+        token_name:
+          type: string
+        total_supply:
+          type: integer
+          format: int64
+        network:
+          type: string
